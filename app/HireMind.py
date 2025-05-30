@@ -1,3 +1,4 @@
+import tempfile
 from langchain_groq import ChatGroq
 from langchain_openai import ChatOpenAI
 from langchain_community.document_loaders import PyPDFLoader
@@ -27,8 +28,12 @@ class HireMind:
             except Exception as e:
                 raise ValueError(f"Failed to load model {self.model_name} with error: {e}")    
     
-    def read_resume(self, resume_path: str):
-        resume = PyPDFLoader("data/resume_sanjay.pdf")
+    def read_resume(self, resume_path: str):  
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
+             tmp_file.write(resume_path.read())
+             tmp_path = tmp_file.name
+
+        resume = PyPDFLoader(tmp_path)
         documents=resume.load()
         resume_text = "\n".join([doc.page_content for doc in documents])
         self.__chain = self.read_prompt | self.__model | self.jsonparser

@@ -47,24 +47,11 @@ if api_key:
                 st.write(resume_text.get('summary', 'Not provided'))
 
                 st.subheader("📊 Experience")
-                st.write(f"{resume_text.get('experience', 0)} years")
+                st.write(f"{resume_text.get('experience', 0)} Years")
 
                 st.subheader("🛠️ Skills")
                 for category, items in resume_text.get('skills', {}).items():
                     st.markdown(f"**{category.replace('_', ' ').title()}**: {', '.join(items)}")
-                
-                st.subheader("📁 Projects")
-                for i, project in enumerate(resume_text.get('projects', []), start=1):
-                    if project:  # avoid empty dicts
-                        st.markdown(f"**{i}. {project.get('title', 'Untitled')}**")
-                        st.write(f"- Domain: {project.get('domain', 'N/A')}")
-                        st.write(f"- Role: {project.get('role', 'N/A')}")
-                        st.write(f"- Duration: {project.get('duration', 'N/A')}")
-                        st.write(f"- Team Size: {project.get('team_size', 'N/A')}")
-                        st.write(f"- Environment: {', '.join(project.get('environment', []))}")
-                        st.markdown("---")
-
-                # st.write(resume_text)
 
             with col2:
                 st.markdown("### 🎯 AI Analysis vs JD")
